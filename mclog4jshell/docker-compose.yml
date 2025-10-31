@@ -1,0 +1,12 @@
+services:
+  enabled:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "25565:25565"
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
