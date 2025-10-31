@@ -1,12 +1,28 @@
 services:
-  enabled:
+  minecraft:
     restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: ./Server
     ports:
       - "25565:25565"
     ulimits:
       nofile:
         soft: 65535
         hard: 65535
+    networks:
+      - mcnet
+
+  bot:
+    build: ./bot
+    ports:
+     - "9000:9000"
+    depends_on:
+      - minecraft
+    restart: always
+    stdin_open: true
+    tty: true
+    networks:
+      - mcnet
+
+networks:
+  mcnet:
+    driver: bridge

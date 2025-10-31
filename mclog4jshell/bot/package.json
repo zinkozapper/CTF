@@ -1,0 +1,7 @@
+{
+  "name": "ctf-bot",
+  "version": "1.0.0",
+  "dependencies": {
+    "mineflayer": "^4.33.0"
+  }
+}
