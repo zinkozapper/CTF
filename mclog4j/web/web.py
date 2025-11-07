@@ -8,16 +8,6 @@ import re
 import urllib
 
 
-import subprocess
-import threading
-from pathlib import Path
-import os
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import socket
-import re
-import urllib
-
-
 class SimpleFileServer(BaseHTTPRequestHandler):
     # --- Configuration for this specific server ---
     REQUIRED_FILENAME = 'Exploit.class'
@@ -156,7 +146,7 @@ class SimpleFileServer(BaseHTTPRequestHandler):
         self._send_html(f"""
             <html><body style="font-family:sans-serif;margin:2em;">
             <h3>Upload successful: {safe_name}</h3>
-            <p>The file is now available for the target JVM at the following path:</p>
+            <p>The file is now being served at the following path:</p>
             <pre><code>{access_url}</code></pre>
             <p>Return to <a href="/upload">upload page</a>.</p>
             </body></html>
@@ -200,7 +190,7 @@ def get_network_ips():
 
 def main() -> None:
     ip = subprocess.check_output("hostname -I", shell=True).decode().strip()
-    httpport = 8000
+    httpport = os.environ.get('hostAccessPort', '8000')
 
     try:
         servePayload(ip, httpport, 1389)
@@ -212,7 +202,7 @@ CUR_FOLDER = Path(__file__).parent.resolve()
 uploadDir = "uploads"
 os.makedirs(uploadDir, exist_ok=True)
 uploaded_files = set()
-allowedExtensions = {".class", ".jar"}
+allowedExtensions = {".class"}
 fileNameLen = 200
 
 if __name__ == "__main__":

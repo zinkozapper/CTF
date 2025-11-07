@@ -3,13 +3,15 @@ Description:
 ```markdown
 My son asked me to make him a minecraft server! He told me to use 1.8.8 because it has better pvp mechanics or something like that. Anyway it's open so his friends can join. I hope that it doesn't log anything incorrectly...
 
+He also had me add a place to upload custom files, weird...
+
 `nc mc.chal.cyberjousting.com 9000`
 or minecraft
 `mc.chal.cyberjousting.com:25565`
 
 Challenge notes:
-The password for rcon is 'password'
-You'll need to connect to the nc even if using the mc client.
+The password for rcon is `password` running on port `22575`
+You'll need to connect using nc even if using the mc client.
 
 ```
 

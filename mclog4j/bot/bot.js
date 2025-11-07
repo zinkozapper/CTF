@@ -23,11 +23,11 @@ const server = net.createServer(socket => {
     containerName = `player_${playerName}_${playerCount}`;
     activeContainers.add(containerName);
 
-    const cmd = `docker run -d --name ${containerName} --network mclog4j_mcnet -p ${hostPort}:${containerPort} mclog4j-webserver`;
+    const cmd = `docker run -d --name ${containerName} --network mclog4j_mcnet -p ${hostPort}:${containerPort} -e hostAccessPort=${hostPort} mclog4j-webserver`;
     hostPort++;
 
     socket.write(`Spawning container ${containerName}...\n`);
-    socket.write('Access web ui at http://<challenge ip>:${hostPort}')
+    socket.write(`Access web ui at http://<challenge ip>:${hostPort}\n`)
     console.log(`Spawning container ${containerName}`);
 
     exec(cmd, (err) => {
