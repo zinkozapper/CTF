@@ -3,6 +3,8 @@ const mineflayer = require('mineflayer');
 const { exec } = require('child_process');
 
 let playerCount = 0;
+let hostPort = 8000;
+let containerPort = 8000;
 
 // Track all active containers for cleanup on server exit
 const activeContainers = new Set();
@@ -21,9 +23,11 @@ const server = net.createServer(socket => {
     containerName = `player_${playerName}_${playerCount}`;
     activeContainers.add(containerName);
 
-    const cmd = `docker run -d --name ${containerName} --network mclog4j_mcnet mclog4j-webserver`;
+    const cmd = `docker run -d --name ${containerName} --network mclog4j_mcnet -p ${hostPort}:${containerPort} mclog4j-webserver`;
+    hostPort++;
 
     socket.write(`Spawning container ${containerName}...\n`);
+    socket.write('Access web ui at http://<challenge ip>:${hostPort}')
     console.log(`Spawning container ${containerName}`);
 
     exec(cmd, (err) => {
@@ -47,9 +51,9 @@ const server = net.createServer(socket => {
 
         const ip = ipStdout.trim();
         console.log(`Container ${containerName} IP: ${ip}`);
-        socket.write(`Container IP: ${ip}\n`);
-        socket.write(`LDAP: ldap://${ip}:1389\n`);
-        socket.write(`HTTP: http://${ip}:8000\n`);
+        socket.write(`Internal Container IP: ${ip}\n`);
+        socket.write(`Internal LDAP Server: ldap://${ip}:1389\n`);
+        socket.write(`Internal HTTP Server: http://${ip}:8000\n`);
       });
     });
   }
