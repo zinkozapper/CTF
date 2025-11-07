@@ -11,7 +11,7 @@ services:
         hard: 65535
     networks:
       mcnet:
-        ipv4_address: 172.18.0.2
+        ipv4_address: 172.20.0.2
 
   bot:
     build: ./bot
@@ -26,7 +26,7 @@ services:
     tty: true
     networks:
       mcnet:
-        ipv4_address: 172.18.0.3
+        ipv4_address: 172.20.0.3
 
   webserver:
     build: ./web
@@ -47,5 +47,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.18.0.0/24
-          gateway: 172.18.0.1
+        - subnet: 172.20.0.0/24
+          gateway: 172.20.0.1

