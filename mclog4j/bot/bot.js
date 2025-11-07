@@ -24,12 +24,13 @@ const server = net.createServer(socket => {
     activeContainers.add(containerName);
 
     const cmd = `docker run -d --name ${containerName} --network mclog4j_mcnet -p ${hostPort}:${containerPort} -e hostAccessPort=${hostPort} mclog4j-webserver`;
-    hostPort++;
 
-    socket.write(`Spawning container ${containerName}...\n`);
+
+    socket.write(`Starting servers...\n`);
     socket.write(`Access web ui at http://<challenge ip>:${hostPort}\n`)
     console.log(`Spawning container ${containerName}`);
 
+    hostPort++;
     exec(cmd, (err) => {
       if (err) {
         console.error(`Error spawning container: ${err}`);
@@ -37,8 +38,8 @@ const server = net.createServer(socket => {
         return;
       }
 
-      console.log(`Container ${containerName} started successfully`);
-      socket.write(`Container ${containerName} started\n`);
+      //console.log(`Container ${containerName} started successfully`);
+      //socket.write(`Container ${containerName} started\n`);
 
       // Get container IP
       const inspectCmd = `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${containerName}`;
