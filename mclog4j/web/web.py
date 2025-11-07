@@ -190,7 +190,7 @@ def get_network_ips():
 
 def main() -> None:
     ip = subprocess.check_output("hostname -I", shell=True).decode().strip()
-    httpport = os.environ.get('hostAccessPort', '8000')
+    httpport = int(os.environ.get('hostAccessPort', '8000'))
 
     try:
         servePayload(ip, httpport, 1389)
