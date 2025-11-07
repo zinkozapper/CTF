@@ -1,0 +1,51 @@
+services:
+  minecraft:
+    restart: always
+    build: ./server
+    ports:
+      - "25565:25565"
+      - "25575:22575"
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    networks:
+      mcnet:
+        ipv4_address: 172.18.0.2
+
+  bot:
+    build: ./bot
+    ports:
+     - "9000:9000"
+    depends_on:
+      - minecraft
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    stdin_open: true
+    tty: true
+    networks:
+      mcnet:
+        ipv4_address: 172.18.0.3
+
+  webserver:
+    build: ./web
+    profiles: ["manual"]
+    ports:
+      - "8000:8000"
+    expose:
+      - "1389"
+    depends_on:
+      - bot
+    restart: always
+    networks:
+      - mcnet
+
+networks:
+  mcnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/24
+          gateway: 172.18.0.1
